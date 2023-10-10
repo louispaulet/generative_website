@@ -3,14 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Page Generator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Generative Website</title>
+    <style>
+        .loader {
+            display: none;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <a href="#" onclick="generatePage('Generate a html+css page that looks like the wikipedia page on turtles please! Write all the css inline.')">Generate a html+css page that looks like the wikipedia page on turtles please!</a>
-    <a href="#" onclick="generatePage('Generate a html+css page that looks like the wikipedia page on rabbits please! Write all the css inline.')">Generate a html+css page that looks like the wikipedia page on rabbits please!</a>
-
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">Generative Website</a>
+    </nav>
+    <div class="container mt-4">
+        <div class="loader" id="loader"></div>
+        <ul id="linkList" class="list-group">
+            <!-- Links will be appended here by script -->
+        </ul>
+    </div>
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">Generative Website &copy; 2023</span>
+        </div>
+    </footer>
     <script>
+        const linkTexts = [
+            "Generate a html+css page that looks like the wikipedia page on turtles please!",
+            "Generate a html+css page that looks like the wikipedia page on rabbits please!"
+        ];
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const linkList = document.getElementById("linkList");
+            linkTexts.forEach(text => {
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item";
+                listItem.innerHTML = `<a href="#" onclick="generatePage('${text}')">${text}</a>`;
+                linkList.appendChild(listItem);
+            });
+        });
+
         async function generatePage(linkText) {
+            document.getElementById('loader').style.display = 'block';
             const response = await fetch(`/generate?link_text=${linkText}`);
             const pageContent = await response.text();
             document.open();
@@ -18,5 +62,8 @@
             document.close();
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
