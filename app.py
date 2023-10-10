@@ -13,7 +13,9 @@ def extract_content_between_backticks(input_string):
     matches = re.findall(pattern, input_string, re.DOTALL)
 
     # get the first match
-    first_match = matches[0]
+    first_match = input_string
+    if matches:
+        first_match = matches[0]
     
     #remove EOL for html display in chatGPT web interface
     first_match = first_match.replace(r"\n", '')
