@@ -2,8 +2,22 @@ from flask import Flask, request, render_template_string
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
 import re
+from slugify import slugify
+import os
+import time
 
 app = Flask(__name__)
+
+def save_html_to_file(link_text, page_content):
+    # Create a filename using a timestamp and a slug of the link_text
+    filename = f"{int(time.time())}_{slugify(link_text[:150])}.html"
+    
+    # Ensure the 'saved_html' directory exists
+    os.makedirs('saved_html', exist_ok=True)
+    
+    # Save the file
+    with open(f'saved_html/{filename}', 'w', encoding='utf-8') as f:
+        f.write(page_content)
 
 def extract_content_between_backticks(input_string):
     # Define the regular expression pattern
@@ -62,7 +76,11 @@ def generate_page():
     <p>Generated response: {response}</p>
     """
     print(page_content)
-    return extract_content_between_backticks(page_content)
+    final_page = extract_content_between_backticks(page_content)
+    
+    save_html_to_file(link_text, final_page)
+    
+    return final_page
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
