@@ -8,6 +8,9 @@
     <style>
         .loader {
             display: none;
+            text-align: center;
+        }
+        .spinner {
             border: 8px solid #f3f3f3;
             border-top: 8px solid #3498db;
             border-radius: 50%;
@@ -27,7 +30,10 @@
         <a class="navbar-brand" href="#">Generative Website</a>
     </nav>
     <div class="container mt-4">
-        <div class="loader" id="loader"></div>
+        <div class="loader" id="loader">
+        <div class="spinner" id="spinner"></div>
+            <p id="loadingText"></p>
+        </div>
         <ul id="linkList" class="list-group">
             <!-- Links will be appended here by script -->
         </ul>
@@ -52,6 +58,7 @@
                 listItem.innerHTML = `<a href="#" onclick="generatePage('${text}')">${text}</a>`;
                 linkList.appendChild(listItem);
             });
+            startLoadingTextRotation();
         });
 
         async function generatePage(linkText) {
@@ -61,6 +68,50 @@
             document.open();
             document.write(pageContent);
             document.close();
+        }
+        
+        function startLoadingTextRotation() {
+            const loadingTextElement = document.getElementById('loadingText');
+            const loadingTexts = [
+                "Calibrating the coconut's aerodynamics...",
+                "Performing unsupervised learning on a parrot...",
+                "Reverse engineering the air-speed velocity of unladen swallows...",
+                "Adjusting the spam filters to allow more lumberjack messages...",
+                "Extracting humor features from a dead parrot...",
+                "Quantifying the silliness of a walk...",
+                "Deploying a herd of wild rabbits into latent space...",
+                "Performing anomaly detection on fish-slapping activities...",
+                "Conducting a multi-armed bandit test on knights who say ‘Ni’...",
+                "Propagating gradients through the Spanish Inquisition (nobody expects it)...",
+                "Implementing a Python (obviously) to slither through your data...",
+                "Tuning the hyperparameters of your killer rabbit...",
+                "Determining the eigenvalue of a coconut...",
+                "Uploading spam, eggs, sausage, and spam into the cloud...",
+                "Calibrating catapults for optimal cow trajectory...",
+                "Engaging ludicrous speed! Wait, wrong reference...",
+                "Teaching neural networks the art of not being seen...",
+                "Employing vicious chickens for robust error handling...",
+                "Bootstrapping the Ministry of Silly Walks...",
+                "Establishing a peer-to-peer network with the Knights of the Round Table...",
+                "Initializing a Monte Carlo simulation of holy hand grenades...",
+                "Calculating the probability of a successful flesh wound...",
+                "Plotting the most efficient path to the Castle Aaargh...",
+                "Extrapolating the economic impact of wafer-thin mints...",
+                "Conducting sentiment analysis on the meaning of life...",
+                "Bootstrapping a Byzantine fault-tolerant shrubbery...",
+                "Evaluating the fitness function of an ex-parrot...",
+                "Debugging a duck to verify if it weighs the same as a witch..."
+            ];
+
+            let currentIndex = 0;
+            
+            function updateLoadingText() {
+                loadingTextElement.innerText = loadingTexts[currentIndex];
+                currentIndex = (currentIndex + 1) % loadingTexts.length;
+            }
+
+            setInterval(updateLoadingText, 4000); // Update text every 5 seconds
+            updateLoadingText(); // Initialize the first text
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

@@ -4,3 +4,6 @@ services:
     build: .
     ports:
       - "5000:5000"
+    volumes:
+      - ./index.html:/app/index.html
+      - ./app.py:/app/app.py
