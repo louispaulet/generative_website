@@ -46,5 +46,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact 📧
 
-- **Project Lead**: Louis Paulet - [louispaulet@example.com](mailto:louispaulet@example.com)
+- **Project Lead**: Louis Paulet - [louispaulet@example.com](mailto:louispaulet13@gmail.com)
 - **Project Link**: [https://github.com/louispaulet/generative_website](https://github.com/louispaulet/generative_website)
