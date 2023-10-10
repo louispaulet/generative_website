@@ -12,10 +12,20 @@ def extract_content_between_backticks(input_string):
     # Use re.findall to find all matches of the pattern in the input string
     matches = re.findall(pattern, input_string, re.DOTALL)
 
+    
+    #second chance here
+    if not matches:
+    
+        pattern = r'content=\'(.*?)$'
+        matches = re.findall(pattern, input_string, re.DOTALL)
+        
+        #perform early return if second extraction didn't work
+        if not matches:
+            #still remove EOL chars
+            return input_string.replace(r"\n", '')
+    
     # get the first match
-    first_match = input_string
-    if matches:
-        first_match = matches[0]
+    first_match = matches[0]
     
     #remove EOL for html display in chatGPT web interface
     first_match = first_match.replace(r"\n", '')
@@ -47,7 +57,8 @@ def generate_page():
     
     # Create page content using the generated response
     page_content = f"""
-    <h1>You clicked: {link_text}</h1>
+    <p>You clicked: {link_text}</p>
+    <p>Sadly we couldnt properly extract the response</p>
     <p>Generated response: {response}</p>
     """
     print(page_content)
