@@ -7,4 +7,6 @@ services:
     volumes:
       - ./index.html:/app/index.html
       - ./app.py:/app/app.py
+      - ./functions.js:/app/functions.js
+      - ./styles.css:/app/styles.css
       - ./saved_html:/app/saved_html
