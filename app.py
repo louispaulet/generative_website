@@ -5,6 +5,7 @@ import re
 from slugify import slugify
 import os
 import time
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -39,6 +40,19 @@ def extract_content_between_backticks(input_string):
     
     # do not return "html" (skip first 4 chars)
     return first_match[4:]
+    
+def extract_html_from_string(html_string):
+# Parse the HTML using BeautifulSoup
+    soup = BeautifulSoup(html_string, 'html.parser')
+
+    # Find the outermost HTML tag
+    outermost_tag = soup.find()
+
+    # Get all the content of the outermost HTML tag as a string
+    outermost_content = str(outermost_tag)
+
+    # Print or use the outermost content as needed
+    return outermost_content
 
 
 # Load OpenAI API key from file
@@ -62,19 +76,24 @@ def generate_page():
     # Generate response using ChatOpenAI
     response = chat_model.predict_messages(messages)
     
-    # Create page content using the generated response    
     page_content = extract_content_between_backticks(response.content)
-    
-    if not page_content:
-        return f"""
-        <p>You clicked: {link_text}</p>
-        <p>Sadly we couldnt properly extract the response</p>
-        <p>Generated response: {response.content}</p>
-        """
-    
     save_html_to_file(link_text, page_content)
     
     return page_content
+    
+    # Create page content using the generated response    
+    #page_content = extract_content_between_backticks(response.content)
+    
+    #if not page_content:
+    #    return f"""
+    #    <p>You clicked: {link_text}</p>
+    #    <p>Sadly we couldnt properly extract the response</p>
+    #    <p>Generated response: {response.content}</p>
+    #    """
+    
+    #save_html_to_file(link_text, page_content)
+    
+    #return page_content
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
