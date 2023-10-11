@@ -7,7 +7,7 @@ import os
 import time
 from bs4 import BeautifulSoup
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 def save_html_to_file(link_text, page_content):
     # Create a filename using a timestamp and a slug of the link_text
@@ -64,7 +64,7 @@ chat_model = ChatOpenAI(openai_api_key=openai_api_key)
 
 @app.route('/')
 def index():
-    return render_template_string(open('index.html').read())
+    return render_template('index.html')
 
 @app.route('/generate', methods=['GET'])
 def generate_page():
