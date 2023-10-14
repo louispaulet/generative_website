@@ -1,0 +1,84 @@
+<html>
+<head>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        .post {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        
+        .post .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .post .meta {
+            color: #666;
+        }
+        
+        .post .content {
+            margin-top: 20px;
+        }
+        
+        .post .content p {
+            margin-bottom: 10px;
+        }
+        
+        .post .content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .post .emoji {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="post">
+<div class="title">Introduction to Kubernetes</div>
+<div class="meta">
+<span class="emoji">🗓️</span>Posted on January 1, 2022 by <span class="emoji">👤</span>John Doe
+        </div>
+<div class="content">
+<p>
+                Kubernetes is an open-source container orchestration platform that automates the deployment,
+                scaling, and management of containerized applications. It was originally developed by Google
+                and is now maintained by the Cloud Native Computing Foundation (CNCF).
+            </p>
+<p>
+                With Kubernetes, you can easily manage and scale your applications without having to worry
+                about the underlying infrastructure. It provides features such as automatic scaling, load
+                balancing, and self-healing, making it suitable for deploying and managing applications in
+                production environments.
+            </p>
+<p>
+                Kubernetes uses a declarative approach to define the desired state of your applications
+                using YAML or JSON manifests. It then continuously monitors the state of the cluster and
+                ensures that the actual state matches the desired state.
+            </p>
+<p>
+                The architecture of Kubernetes is based on a master-node model. The master node is responsible
+                for managing the cluster and making decisions about the deployment and scaling of applications.
+                The worker nodes, also known as minions, are responsible for running the actual application
+                containers.
+            </p>
+<p>
+                Whether you are running a single-node cluster on your local machine or a large-scale
+                production cluster, Kubernetes provides a robust and scalable platform for managing your
+                containerized applications.
+            </p>
+</div>
+</div>
+</body>
+</html>

@@ -44,6 +44,10 @@ chat_model = ChatOpenAI(openai_api_key=openai_api_key)
 @app.route('/')
 def index():
     return render_template_string(open('index.html').read())
+    
+@app.route('/alt_index')
+def alt_index():
+    return render_template_string(open('alt_index.html').read())
 
 @app.route('/generate', methods=['GET'])
 def generate_page():

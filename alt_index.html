@@ -87,7 +87,7 @@
             let pageType = document.getElementById("pageType").value;
             let topic = document.getElementById("topic").value;
 
-            let linkText = "Generate a " + pageType + " about " + topic + " with css inline style and many details.";
+            let linkText = "Generate a html+css that looks like a " + pageType + " on " + topic + " please, (css inline, replace all images by emojis, detailed text).";
 
             document.getElementById('loader').style.display = 'block';
             const response = await fetch(`/generate?link_text=${linkText}`);
