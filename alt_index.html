@@ -49,12 +49,29 @@
     </nav>
     <div class="container mt-4 content">
         <div class="loader" id="loader">
-        <div class="spinner" id="spinner"></div>
+            <div class="spinner" id="spinner"></div>
             <p id="loadingText"></p>
         </div>
-        <ul id="linkList" class="list-group">
-            <!-- Links will be appended here by script -->
-        </ul>
+        <div id="generator" class="mb-4">
+            <p>Generate a 
+                <select id="pageType">
+                    <option value="wikipedia page">wikipedia page</option>
+                    <option value="reddit post">reddit post</option>
+                    <option value="blog article">blog article</option>
+                    <!-- Add more options as needed -->
+                </select> 
+                about 
+                <select id="topic">
+                    <option value="rabbits">rabbits</option>
+                    <option value="turtles">turtles</option>
+                    <option value="france">France</option>
+                    <option value="kubernetes">Kubernetes</option>
+                    <!-- Add more options as needed -->
+                </select> 
+                with css inline style and many details.
+                <button onclick="generatePage()">Generate</button>
+            </p>
+        </div>
     </div>
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container">
@@ -62,42 +79,16 @@
         </div>
     </footer>
     <script>
-        const linkTexts = [
-            
-            
-            "Generate a html+css page that looks like the wikipedia page on turtles please! (css inline, replace all images by emojis)",
-            "Generate a html+css page that looks like the wikipedia page on rabbits please! (css inline, replace all images by emojis)",
-            "Generate a html+css page that looks like the a reddit post on r/AmItheAsshole please! (css inline, replace all images by emojis). Write a detailed and compelling story.",
-            "Generate a html+css page that looks like the a reddit post on r/AskReddit please! (css inline, replace all images by emojis). Write a detailed and compelling story.",
-            "Generate a html+css page that looks like the a reddit post on r/AskScience please! (css inline, replace all images by emojis). Write a detailed and compelling story.",
-            "Generate a html+css page that looks like the a reddit post on r/France please! (css inline, replace all images by emojis). Write a detailed and compelling story.",
-            "Generate a html+css page that looks like the a reddit post on r/Watches please! (css inline, replace all images by emojis). Write a detailed and compelling story.",
-            
-            
-            "Generate a html+css tribute page dedicated to 80s pop culture (css inline). Replace any potential images with 80s themed emojis and ASCII art. Ensure a vibrant color palette reminiscent of the era.",
-            "Generate a html+css page that mimics the visual style of an old-school video game instruction manual (css inline). Utilize pixel art emojis and characters to illustrate the guide, and implement a retro 8-bit font if possible.",
-            "Generate a html+css digital scrapbook page that represents a traveler’s journey through Italy (css inline). Utilize food, transport, and landmark emojis instead of images, with handwritten-styled fonts and a warm color scheme.",
-            "Generate a html+css page that serves as an online menu for a whimsical, magical themed cafe (css inline). Utilize mystical emojis and symbols in place of images, with a pastel and glittery color theme.",
-            "Generate a html+css page that takes inspiration from classic fairy tales (css inline). Use emojis for main characters and elements, incorporating vintage-style fonts and a soft, dreamy color palette.",
-            "Generate a html+css Mission to Mars themed webpage (css inline), where emojis represent planets, stars, and astronauts. Employ a dark, starry color scheme and futuristic fonts.",
-            "Generate a html+css page representing a digital farmers market (css inline). Include emojis for various fruits, vegetables, and artisanal products, and utilize earthy colors and rustic fonts.",
-            "Generate a html+css page for a virtual aquarium tour (css inline), where different sections are represented by various sea creature emojis. Utilize deep blue and green color schemes, and sleek, modern fonts.",
-            "Generate a html+css page that mimics a medieval scroll (css inline). Use emojis for heraldic symbols, beasts, and royal items, and choose parchment colors and calligraphic fonts.",
-            "Generate a html+css page for a spooky, yet playful, haunted house tour (css inline). Replace typical horror images with ghost and monster emojis, using a dark yet vibrant color palette, and whimsical fonts.",
-        ];
-        
         document.addEventListener("DOMContentLoaded", function () {
-            const linkList = document.getElementById("linkList");
-            linkTexts.forEach(text => {
-                let listItem = document.createElement("li");
-                listItem.className = "list-group-item";
-                listItem.innerHTML = `<a href="#" onclick="generatePage('${text}')">${text}</a>`;
-                linkList.appendChild(listItem);
-            });
             startLoadingTextRotation();
         });
 
-        async function generatePage(linkText) {
+        async function generatePage() {
+            let pageType = document.getElementById("pageType").value;
+            let topic = document.getElementById("topic").value;
+
+            let linkText = "Generate a html+css that looks like a " + pageType + " on " + topic + " please, (css inline, replace all images by emojis, detailed text).";
+
             document.getElementById('loader').style.display = 'block';
             const response = await fetch(`/generate?link_text=${linkText}`);
             const pageContent = await response.text();
@@ -105,7 +96,7 @@
             document.write(pageContent);
             document.close();
         }
-        
+
         function startLoadingTextRotation() {
             const loadingTextElement = document.getElementById('loadingText');
             const loadingTexts = [
