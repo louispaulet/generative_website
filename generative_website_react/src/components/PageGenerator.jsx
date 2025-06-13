@@ -86,7 +86,10 @@ if (e.key === "Enter" && !loading) {
       </div>
       {content && (
         <>
-          <div className="crt w-full" style={{ aspectRatio: "4 / 3" }}>
+          <div
+            className="crt w-full"
+            style={{ aspectRatio: "4 / 3", minHeight: "600px" }}
+          >
             <iframe
               title="generated-content"
               className="w-full h-full rounded-none"
