@@ -7,7 +7,7 @@ export default function Navbar() {
   const inactive = "text-gray-700 hover:text-blue-600";
 
   return (
-    <nav className="bg-white shadow mb-6">
+    <nav className="win95-window mb-6">
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-blue-600">MySite</h1>

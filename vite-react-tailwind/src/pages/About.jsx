@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section className="max-w-5xl mx-auto px-4 py-12">
+    <section className="win95-window max-w-5xl mx-auto px-4 py-12">
       <h2 className="text-3xl font-bold mb-4">About Us</h2>
       <p className="text-gray-700 mb-4">
         Generative Website is an innovative project that leverages OpenAI's
