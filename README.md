@@ -2,6 +2,8 @@
 
 Generative Website is an innovative project that leverages OpenAI's ChatGPT to dynamically generate HTML pages based on user input. With a sleek interface built with Bootstrap, users can request a variety of page styles and themes.
 
+This project is also an experiment in recreating the "dead internet" experience in a controlled manner, allowing visitors to safely explore what that could look and feel like.
+
 ## Features 🚀
 
 - **Dynamic Page Generation**: Create unique HTML pages based on predefined prompts.
@@ -43,6 +45,10 @@ We welcome contributions from the community! Whether it's bug reports, feature r
 ## License 📄
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Privacy 🚦
+
+The project is GDPR compliant. The application does not collect, store or share any personal data. A dedicated [Privacy Policy](/privacy) page is available when running the site.
 
 ## Contact 📧
 

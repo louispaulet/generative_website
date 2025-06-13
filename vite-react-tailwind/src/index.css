@@ -7,7 +7,58 @@
   .crt {
     @apply border-8 border-gray-700 rounded-lg shadow-lg;
     position: relative;
-  }
+}
+
+/* ───── Windows 95 / Netscape-era styling ───── */
+:root{
+  --win-bg:#c0c0c0;
+  --win-light:#ffffff;
+  --win-dark:#808080; /* darker gray for shadows */
+}
+
+.win95-toolbar{@apply flex items-center gap-2 mt-8;}
+
+.win95-input{
+  @apply flex-grow px-2 py-1 text-sm outline-none;
+  background:var(--win-bg);
+  border:2px solid var(--win-dark);
+  border-top-color:var(--win-light);
+  border-left-color:var(--win-light);
+}
+
+.win95-button{
+  @apply px-4 py-1 text-sm font-bold select-none;
+  background:var(--win-bg);
+  border:2px solid var(--win-light);
+  border-bottom-color:var(--win-dark);
+  border-right-color:var(--win-dark);
+}
+.win95-button:active{
+  border:2px solid var(--win-dark);
+  border-bottom-color:var(--win-light);
+  border-right-color:var(--win-light);
+}
+
+.win95-taskbar{
+  @apply flex items-center h-8 mt-1;
+  background:var(--win-bg);
+  border-top:2px solid var(--win-light);
+  border-left:2px solid var(--win-light);
+  border-right:2px solid var(--win-dark);
+  border-bottom:2px solid var(--win-dark);
+  font-size:0.75rem;
+  padding:0 4px;
+}
+.win95-start{
+  @apply px-2 mr-2 font-bold cursor-default;
+  border:2px solid var(--win-light);
+  border-bottom-color:var(--win-dark);
+  border-right-color:var(--win-dark);
+}
+.win95-clock{@apply px-2;}
+
+/* Remove old CRT border when reused elsewhere */
+.crt{border:none!important;}
   .crt::after {
     content: "";
     position: absolute;

@@ -49,6 +49,10 @@ def index():
 def alt_index():
     return render_template_string(open('alt_index.html').read())
 
+@app.route('/privacy')
+def privacy():
+    return render_template_string(open('privacy.html').read())
+
 @app.route('/generate', methods=['GET'])
 def generate_page():
     link_text = request.args.get('link_text', 'Default')
