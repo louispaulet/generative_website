@@ -9,7 +9,8 @@ export default function PageGenerator() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleGenerate = async () => {
+const handleGenerate = async () => {
+    if (loading) return;
     if (!prompt.trim()) return;
     setLoading(true);
     try {
@@ -64,11 +65,12 @@ export default function PageGenerator() {
         <input
           type="text"
           className="flex-grow border rounded px-3 py-2"
-          placeholder="Enter a prompt"
+placeholder="Enter a prompt"
+          disabled={loading}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+if (e.key === "Enter" && !loading) {
               e.preventDefault();
               handleGenerate();
             }
