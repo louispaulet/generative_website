@@ -44,6 +44,10 @@ We welcome contributions from the community! Whether it's bug reports, feature r
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Privacy 🚦
+
+The project is GDPR compliant. The application does not collect, store or share any personal data. A dedicated [Privacy Policy](/privacy) page is available when running the site.
+
 ## Contact 📧
 
 - **Project Lead**: Louis Paulet - [louispaulet13@gmail.com](mailto:louispaulet13@gmail.com)
