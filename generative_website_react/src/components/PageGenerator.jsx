@@ -64,7 +64,7 @@ const handleGenerate = async () => {
       <div className="win95-toolbar">
         <input
           type="text"
-          className="win95-input"
+          className="win95-input bg-white text-black placeholder-gray-700"
 placeholder="Enter a prompt"
           disabled={loading}
           value={prompt}
