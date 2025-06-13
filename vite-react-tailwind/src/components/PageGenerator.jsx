@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 import getOpenAIClient from "../openaiClient";
+import { z } from "zod";
+import { zodTextFormat } from "openai/helpers/zod";
 
 export default function PageGenerator() {
   const [prompt, setPrompt] = useState("");
@@ -16,19 +18,25 @@ export default function PageGenerator() {
       if (apiKey) {
         const openai = getOpenAIClient();
         try {
-          const completion = await openai.chat.completions.create({
-            model: "gpt-4.1-nano-2025-04-14",
-            messages: [
-              {
-                role: "user",
-                content: `You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer in raw HTML that will be directly displayed. 
-Take the following user request, or url, and display the requested URL page.  
-### USER REQUEST
-${prompt}`,
-              },
-            ],
+          const HtmlWrap = z.object({
+            html: z.array(z.string()),
           });
-          setContent(completion.choices?.[0]?.message?.content || "");
+          const response = await openai.responses.parse({
+            model: "gpt-4.1-nano-2025-04-14",
+            input: [
+              {
+                role: "system",
+                content:
+                  'You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer with a JSON object {"html": ["<RAW_HTML>"]} where the "html" key holds an array with a single string containing the raw HTML to be directly displayed.',
+              },
+              { role: "user", content: prompt },
+            ],
+            text: {
+              format: zodTextFormat(HtmlWrap, "htmlWrap"),
+            },
+          });
+          const htmlArray = response.output_parsed.html;
+          setContent(htmlArray?.[0] ?? "");
         } catch (err) {
           console.error(err);
           setContent(
