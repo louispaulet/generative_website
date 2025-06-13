@@ -11,7 +11,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-blue-600">
             <Link to="/" className="hover:underline">
-              MySite
+              GenWeb
             </Link>
           </h1>
           <div className="space-x-2">
