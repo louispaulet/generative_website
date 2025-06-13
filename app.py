@@ -38,8 +38,8 @@ def extract_html_from_string(html_string):
 with open('api_key.txt', 'r') as file:
     openai_api_key = file.read().strip()
 
-# Initialize ChatOpenAI object with the loaded API key
-chat_model = ChatOpenAI(openai_api_key=openai_api_key)
+# Default ChatOpenAI object with the key from disk.
+default_chat_model = ChatOpenAI(openai_api_key=openai_api_key)
 
 @app.route('/')
 def index():
@@ -57,9 +57,17 @@ def privacy():
 def generate_page():
     link_text = request.args.get('link_text', 'Default')
     
+    # Use API key from header if provided, otherwise fallback to default
+    incoming_key = request.headers.get("X-API-Key", "").strip()
+    chat_model = (
+        ChatOpenAI(openai_api_key=incoming_key)
+        if incoming_key
+        else default_chat_model
+    )
+
     # Create a HumanMessage object with the link_text
     messages = [HumanMessage(content=link_text)]
-    
+
     # Generate response using ChatOpenAI
     response = chat_model.predict_messages(messages)
     

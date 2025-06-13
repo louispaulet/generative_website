@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* CRT monitor look */
+  .crt {
+    @apply border-8 border-gray-700 rounded-lg shadow-lg;
+    position: relative;
+  }
+  .crt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* green scan-lines */
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 0, 0.05) 0px,
+      rgba(0, 255, 0, 0.05) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  }
+  .crt::before {
+    /* subtle curvature glare */
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(0, 0, 0, 0) 70%
+    );
+    mix-blend-mode: overlay;
+  }
+}
