@@ -7,7 +7,7 @@ import Tos from "./pages/Tos";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div className="flex flex-col min-h-screen">
         <Navbar />
 
