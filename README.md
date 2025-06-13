@@ -1,6 +1,6 @@
 # Generative Website 🌐
 
-Generative Website is an innovative project that leverages OpenAI's ChatGPT to dynamically generate HTML pages based on user input. With a sleek interface built with Bootstrap, users can request a variety of page styles and themes.
+Generative Website is an innovative project that leverages OpenAI's ChatGPT to dynamically generate HTML pages based on user input. It now includes a small Vite + React frontend located in `vite-frontend/` which communicates with the Flask backend. Users can request a variety of page styles and themes directly from the browser.
 
 ## Features 🚀
 
@@ -29,12 +29,26 @@ Ensure you have the following installed on your local machine:
     ```
 
 Visit `http://localhost:5000` in your browser to explore the Generative Website!
+If you want to work on the React frontend separately, run the following commands:
+
+```bash
+cd vite-frontend
+npm install
+npm run dev
+```
+
+This will start the Vite dev server on `http://localhost:5173`.
 
 ## Development 💻
 
-- Modify the `index.html` file to change the content of the website or add new prompts.
-- Update `app.py` to handle additional routes or enhance the page generation logic.
-- To add or modify dependencies, update the `requirements.txt` file.
+Backend files reside in the repository root while the Vite source code lives in
+`vite-frontend/src`.
+
+- Edit Python files such as `app.py` to tweak the generation logic.
+- Modify React components under `vite-frontend/src` to update the interface or
+  add new pages and components.
+- To add Python dependencies, update `requirements.txt`; for frontend packages,
+  modify `vite-frontend/package.json`.
 
 ## Contribution 🤝
 
