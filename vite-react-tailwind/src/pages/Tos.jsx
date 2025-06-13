@@ -1,6 +1,6 @@
 export default function Tos() {
   return (
-    <section className="max-w-5xl mx-auto px-4 py-12">
+    <section className="win95-window max-w-5xl mx-auto px-4 py-12">
       <h2 className="text-3xl font-bold mb-4">Terms of Service</h2>
       <p className="text-gray-700 mb-2">
         By using this site, you agree to the following terms and conditions.

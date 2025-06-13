@@ -3,11 +3,17 @@
 @tailwind utilities;
 
 @layer components {
+  body {
+    background: var(--win-bg);
+    font-family: "MS Sans Serif", Arial, sans-serif;
+    color: #000;
+  }
+
   /* CRT monitor look */
   .crt {
     @apply border-8 border-gray-700 rounded-lg shadow-lg;
     position: relative;
-}
+  }
 
 /* ───── Windows 95 / Netscape-era styling ───── */
 :root{
@@ -55,10 +61,17 @@
   border-bottom-color:var(--win-dark);
   border-right-color:var(--win-dark);
 }
-.win95-clock{@apply px-2;}
+  .win95-clock{@apply px-2;}
 
-/* Remove old CRT border when reused elsewhere */
-.crt{border:none!important;}
+  .win95-window {
+    background: var(--win-bg);
+    border: 2px solid var(--win-light);
+    border-bottom-color: var(--win-dark);
+    border-right-color: var(--win-dark);
+    padding: 0.5rem;
+  }
+
+/* CRT overlay effects */
   .crt::after {
     content: "";
     position: absolute;
