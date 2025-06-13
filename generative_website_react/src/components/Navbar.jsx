@@ -1,16 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 export default function Navbar() {
-  const base =
-    "px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200";
-  const active = "text-white bg-blue-600";
-  const inactive = "text-gray-700 hover:text-blue-600";
+  const base = "win95-button text-sm";
+  const active = "bg-blue-600 text-white";
+  const inactive = "hover:bg-blue-100 text-gray-800";
 
   return (
-    <nav className="win95-window mb-6">
+    <nav className="win95-navbar mb-6">
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <h1 className="text-xl font-bold text-blue-600">MySite</h1>
+          <h1 className="text-xl font-bold text-blue-600">
+            <Link to="/" className="hover:underline">
+              MySite
+            </Link>
+          </h1>
           <div className="space-x-2">
             <NavLink
               to="/"
