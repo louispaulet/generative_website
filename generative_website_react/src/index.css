@@ -63,13 +63,21 @@
 }
   .win95-clock{@apply px-2;}
 
-  .win95-window {
+.win95-window {
     background: var(--win-bg);
     border: 2px solid var(--win-light);
     border-bottom-color: var(--win-dark);
     border-right-color: var(--win-dark);
     padding: 0.5rem;
-  }
+}
+
+.win95-navbar {
+  background: var(--win-bg);
+  border: 2px solid var(--win-light);
+  border-bottom-color: var(--win-dark);
+  border-right-color: var(--win-dark);
+  padding: 0.25rem 0.5rem;
+}
 
 /* CRT overlay effects */
   .crt::after {
