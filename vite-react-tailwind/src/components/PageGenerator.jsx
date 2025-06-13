@@ -61,10 +61,10 @@ const handleGenerate = async () => {
 
   return (
     <div className="mt-8">
-      <div className="flex gap-2">
+      <div className="win95-toolbar">
         <input
           type="text"
-          className="flex-grow border rounded px-3 py-2"
+          className="win95-input"
 placeholder="Enter a prompt"
           disabled={loading}
           value={prompt}
@@ -78,15 +78,16 @@ if (e.key === "Enter" && !loading) {
         />
         <button
           onClick={handleGenerate}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="win95-button"
           disabled={loading}
         >
           {loading ? "Generating..." : "Generate"}
         </button>
       </div>
       {content && (
+        <>
         <div
-          className="crt mx-auto mt-6"
+          className="mx-auto mt-6"
           style={{ width: "50vw", aspectRatio: "4 / 3" }}
         >
           <iframe
@@ -95,6 +96,15 @@ if (e.key === "Enter" && !loading) {
             srcDoc={content}
           />
         </div>
+        <div
+          className="win95-taskbar mx-auto"
+          style={{ width: "50vw" }}
+        >
+          <span className="win95-start">Start</span>
+          <span className="flex-grow" />
+          <span className="win95-clock">12:00 AM</span>
+        </div>
+        </>
       )}
     </div>
   );
