@@ -67,6 +67,12 @@ export default function PageGenerator() {
           placeholder="Enter a prompt"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleGenerate();
+            }
+          }}
         />
         <button
           onClick={handleGenerate}
