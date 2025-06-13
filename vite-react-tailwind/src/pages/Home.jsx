@@ -1,3 +1,4 @@
+import ApiKeySetup from "../components/ApiKeySetup";
 import PageGenerator from "../components/PageGenerator";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
         pages based on your prompts. Use the generator below to craft a new page
         on the fly.
       </p>
+      <ApiKeySetup className="mb-8" />
       <PageGenerator />
     </section>
   );
