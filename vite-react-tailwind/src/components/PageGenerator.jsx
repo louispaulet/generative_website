@@ -77,12 +77,16 @@ export default function PageGenerator() {
         </button>
       </div>
       {content && (
-        <iframe
-          title="generated-content"
-          className="mt-6 border rounded w-1/2 mx-auto"
-          style={{ height: "50vh" }}
-          srcDoc={content}
-        />
+        <div
+          className="crt mx-auto mt-6"
+          style={{ width: "50vw", aspectRatio: "4 / 3" }}
+        >
+          <iframe
+            title="generated-content"
+            className="w-full h-full rounded-none"
+            srcDoc={content}
+          />
+        </div>
       )}
     </div>
   );
