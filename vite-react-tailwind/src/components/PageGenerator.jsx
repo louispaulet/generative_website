@@ -77,9 +77,11 @@ export default function PageGenerator() {
         </button>
       </div>
       {content && (
-        <div
-          className="mt-6 border rounded p-4"
-          dangerouslySetInnerHTML={{ __html: content }}
+        <iframe
+          title="generated-content"
+          className="mt-6 border rounded w-1/2 mx-auto"
+          style={{ height: "50vh" }}
+          srcDoc={content}
         />
       )}
     </div>
