@@ -43,3 +43,19 @@ The optimized site is output to `generative_website_react/dist`. You can preview
 ```
 
 Feel free to explore the React source in `generative_website_react` to learn how the generator works.
+
+## Vite Project Structure
+
+The `generative_website_react` folder is a standard Vite + React project with the following key pieces:
+
+- **Pages** (`src/pages`):
+  - `Home.jsx` – main interface with the generator and API key setup.
+  - `About.jsx` – project background and feature overview.
+  - `Tos.jsx` – simple terms of service page.
+- **Components** (`src/components`):
+  - `Navbar` and `Footer` provide the retro UI chrome.
+  - `ApiKeySetup` stores the OpenAI key in a cookie.
+  - `PageGenerator` sends prompts to ChatGPT and displays the result.
+- **Routing** (`src/App.jsx`): `/`, `/about` and `/tos` routes are defined using React Router with a 404 fallback.
+- **Libraries**: React 19, React Router DOM 7, Tailwind CSS 3, OpenAI SDK, js-cookie for persistence and zod for schema validation.
+- **Configuration**: Vite handles bundling (`vite.config.js`) and Tailwind (`tailwind.config.js`), with deployment via the `gh-pages` script.
