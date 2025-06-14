@@ -7,7 +7,7 @@ export default function Navbar() {
 
   return (
     <nav className="win95-navbar mb-6">
-      <div className="max-w-5xl mx-auto px-4">
+<div className="max-w-full sm:max-w-5xl mx-auto px-1 sm:px-4">
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-blue-600">
             <Link to="/" className="hover:underline flex items-center space-x-1">

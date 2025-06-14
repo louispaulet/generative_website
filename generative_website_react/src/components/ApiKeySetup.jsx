@@ -35,7 +35,7 @@ export default function ApiKeySetup({ className = "" }) {
 
   return (
     <div
-      className={`w-full max-w-3xl mx-auto flex items-center gap-4 px-4 py-2 border border-gray-300 rounded-md shadow bg-white/80 backdrop-blur ${className}`}
+className={`w-full max-w-full sm:max-w-3xl mx-auto flex items-center gap-4 px-1 sm:px-4 py-2 border border-gray-300 rounded-md shadow bg-white/80 backdrop-blur ${className}`}
     >
       {saved ? (
         <>
