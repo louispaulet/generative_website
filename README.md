@@ -59,3 +59,7 @@ The `generative_website_react` folder is a standard Vite + React project with th
 - **Routing** (`src/App.jsx`): `/`, `/about` and `/tos` routes are defined using React Router with a 404 fallback.
 - **Libraries**: React 19, React Router DOM 7, Tailwind CSS 3, OpenAI SDK, js-cookie for persistence and zod for schema validation.
 - **Configuration**: Vite handles bundling (`vite.config.js`) and Tailwind (`tailwind.config.js`), with deployment via the `gh-pages` script.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
