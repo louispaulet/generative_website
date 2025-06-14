@@ -148,6 +148,17 @@ content:
     }
   };
 
+  // Demo prompt for the Start button
+  const demoPrompt = `imagine a youtube landing page in a world where videos have a smell : what would it look like ? imagine the disgustings trends of clickbait smell o vision videos -- please use emojis instead of images`;
+
+  // Effect: when prompt is set to demoPrompt, trigger handleGenerate
+  useEffect(() => {
+    if (prompt === demoPrompt) {
+      handleGenerate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prompt]);
+
   return (
     <div className="mx-auto mt-8 space-y-2 max-w-full sm:w-[50vw] px-1 sm:px-0" style={{ width: "100vw" }}>
       <div className="win95-toolbar flex flex-row items-center gap-2">
@@ -202,7 +213,14 @@ content:
         />
       </div>
       <div className="win95-taskbar w-full">
-        <span className="win95-start">Start</span>
+        <button
+          className="win95-start"
+          onClick={() => {
+            setPrompt(demoPrompt);
+          }}
+        >
+          Start
+        </button>
         <span className="flex-grow" />
         <span className="win95-clock">
           {currentTime.toLocaleTimeString("en-US", {
