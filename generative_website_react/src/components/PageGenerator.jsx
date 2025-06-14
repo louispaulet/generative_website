@@ -11,6 +11,10 @@ export default function PageGenerator() {
   const [loading, setLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => new Date());
 
+  // History state
+  const [history, setHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
@@ -58,6 +62,13 @@ export default function PageGenerator() {
           window.__GEN_RAW_IFRAME__ = htmlWithCss;
           window.__GEN_SANITIZED_IFRAME__ = DOMPurify.sanitize(htmlWithCss, { ADD_TAGS: ["style"] });
           setContent(htmlWithCss); // No sanitization for iframe content
+          // Update history
+          setHistory((prev) => {
+            const newHistory = prev.slice(0, historyIndex + 1);
+            newHistory.push(htmlWithCss);
+            return newHistory;
+          });
+          setHistoryIndex((prev) => prev + 1);
         } catch (err) {
           console.error(err);
           setContent(
@@ -100,6 +111,13 @@ export default function PageGenerator() {
         window.__GEN_RAW_IFRAME__ = htmlWithCss;
         window.__GEN_SANITIZED_IFRAME__ = DOMPurify.sanitize(htmlWithCss, { ADD_TAGS: ["style"] });
         setContent(htmlWithCss); // No sanitization for iframe content
+        // Update history
+        setHistory((prev) => {
+          const newHistory = prev.slice(0, historyIndex + 1);
+          newHistory.push(htmlWithCss);
+          return newHistory;
+        });
+        setHistoryIndex((prev) => prev + 1);
       }
     } catch {
       setContent("<p class='text-red-500'>Failed to generate page.</p>");
@@ -108,12 +126,43 @@ export default function PageGenerator() {
     }
   };
 
+  // Navigation handlers
+  const handleBack = () => {
+    if (historyIndex > 0) {
+      setHistoryIndex((prev) => prev - 1);
+      setContent(history[historyIndex - 1]);
+    }
+  };
+
+  const handleForward = () => {
+    if (historyIndex < history.length - 1) {
+      setHistoryIndex((prev) => prev + 1);
+      setContent(history[historyIndex + 1]);
+    }
+  };
+
   return (
-<div className="mx-auto mt-8 space-y-2 max-w-full sm:w-[50vw] px-1 sm:px-0" style={{ width: "100vw" }}>
-      <div className="win95-toolbar">
+    <div className="mx-auto mt-8 space-y-2 max-w-full sm:w-[50vw] px-1 sm:px-0" style={{ width: "100vw" }}>
+      <div className="win95-toolbar flex flex-row items-center gap-2">
+        <button
+          className="win95-button px-2"
+          onClick={handleBack}
+          disabled={historyIndex <= 0}
+          aria-label="Back"
+        >
+          ←
+        </button>
+        <button
+          className="win95-button px-2"
+          onClick={handleForward}
+          disabled={historyIndex >= history.length - 1}
+          aria-label="Forward"
+        >
+          →
+        </button>
         <input
           type="text"
-          className="win95-input bg-white text-black placeholder-gray-700"
+          className="win95-input bg-white text-black placeholder-gray-700 flex-1"
           placeholder="Enter a prompt"
           disabled={loading}
           value={prompt}
@@ -124,6 +173,7 @@ export default function PageGenerator() {
               handleGenerate();
             }
           }}
+          style={{ minWidth: 0 }}
         />
         <button
           onClick={handleGenerate}
@@ -153,7 +203,6 @@ export default function PageGenerator() {
           })}
         </span>
       </div>
-      
       <div className="mt-4 p-3 bg-gray-50 border border-gray-200 rounded text-left text-xs text-gray-600">
         <strong>What is Generative Browsing?</strong>
         <br />
