@@ -5,6 +5,13 @@ import { z } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
 import DOMPurify from "dompurify";
 
+const demoPrompts = [
+  `imagine a youtube landing page in a world where videos have a smell : what would it look like ? imagine the disgustings trends of clickbait smell o vision videos -- please use emojis instead of images`,
+  "display a fake windows xp interface",
+  "make a fake overly complex interface to declare taxes",
+  "Weird invitation to a gender reveal party in the sewers. Mention in big 'Gender Reveal Party Down The Drain'"
+];
+
 export default function PageGenerator() {
   const [prompt, setPrompt] = useState("");
   const [content, setContent] = useState("");
@@ -148,6 +155,14 @@ content:
     }
   };
 
+  // Effect: when prompt is set to any demo prompt, trigger handleGenerate
+  useEffect(() => {
+    if (demoPrompts.includes(prompt)) {
+      handleGenerate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prompt]);
+
   return (
     <div className="mx-auto mt-8 space-y-2 max-w-full sm:w-[50vw] px-1 sm:px-0" style={{ width: "100vw" }}>
       <div className="win95-toolbar flex flex-row items-center gap-2">
@@ -202,7 +217,16 @@ content:
         />
       </div>
       <div className="win95-taskbar w-full">
-        <span className="win95-start">Start</span>
+        <button
+          className="win95-start"
+          onClick={() => {
+            // Pick a random prompt from the list
+            const randomPrompt = demoPrompts[Math.floor(Math.random() * demoPrompts.length)];
+            setPrompt(randomPrompt);
+          }}
+        >
+          Start
+        </button>
         <span className="flex-grow" />
         <span className="win95-clock">
           {currentTime.toLocaleTimeString("en-US", {
@@ -217,6 +241,9 @@ content:
         Every time you enter a prompt, <span className="font-semibold">gpt4.1-nano</span>—a lightning-fast, affordable large language model—conjures a unique HTML page for you in real time. This is the "dead internet": a latent space where content is ephemeral, personal, and exists only as long as you need it. <br />
         <br />
         <span className="font-semibold">Why gpt4.1-nano?</span> Its speed and low cost make it ideal for generating the invisible tokens (HTML tags and markup) that power the web, enabling a seamless, scalable, and democratized creative experience for all.
+      </div>
+      <div className="mt-2 text-xs italic text-gray-700 bg-yellow-50 border border-yellow-200 rounded px-3 py-2">
+        Tip: click the <span className="font-semibold">start</span> button to try a random prompt!
       </div>
     </div>
   );
