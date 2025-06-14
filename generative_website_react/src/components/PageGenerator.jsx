@@ -45,8 +45,8 @@ export default function PageGenerator() {
             input: [
               {
                 role: "system",
-                content:
-                  'You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer with a JSON object: { "html": "<RAW_HTML>", "css": "<RAW_CSS>" }. The HTML must use a few invented CSS classes, and the CSS must define those classes. You must ALWAYS return both "html" and "css" keys, even if the user prompt does not mention CSS. Never return only HTML. Do not include any explanations or extra text. Only output the JSON object.',
+content:
+                  'You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer with a JSON object: { "html": "<RAW_HTML>", "css": "<RAW_CSS>" }. The HTML must use a few invented CSS classes, and the CSS must define those classes. You must ALWAYS return both "html" and "css" keys, even if the user prompt does not mention CSS. Never return only HTML. Do not include any explanations or extra text. Only output the JSON object. The minimum number of tokens to generate is 1024. If the user prompt is too short, expand the content with relevant, creative, and visually interesting HTML and CSS until the output reaches at least 1024 tokens. Your outputs will be stored forever to be critisized by UI/UX people, so do your best!',
               },
               { role: "user", content: prompt },
             ],
