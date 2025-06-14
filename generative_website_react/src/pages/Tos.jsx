@@ -4,7 +4,7 @@ export default function Tos() {
   const warnIcon = "/retro_warning_sign.webp";
 
   return (
-    <section className="win95-window max-w-5xl mx-auto px-4 py-12 space-y-4">
+<section className="win95-window max-w-full sm:max-w-5xl mx-auto px-1 sm:px-4 py-12 space-y-4">
       <div className="flex items-center mb-4">
         <img src={floppyIcon} alt="Floppy" className="w-6 h-6 mr-2" />
         <h2 className="text-3xl font-bold">Terms of Service</h2>

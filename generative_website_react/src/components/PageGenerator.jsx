@@ -69,7 +69,7 @@ export default function PageGenerator() {
   };
 
   return (
-    <div className="mx-auto mt-8 space-y-2" style={{ width: "50vw" }}>
+<div className="mx-auto mt-8 space-y-2 max-w-full sm:w-[50vw] px-1 sm:px-0" style={{ width: "100vw" }}>
       <div className="win95-toolbar">
         <input
           type="text"

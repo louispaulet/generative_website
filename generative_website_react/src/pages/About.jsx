@@ -5,7 +5,7 @@ export default function About() {
   const bulletIcon = "/retro_check_mark.webp";
 
   return (
-    <section className="win95-window max-w-5xl mx-auto px-4 py-12 space-y-4">
+<section className="win95-window max-w-full sm:max-w-5xl mx-auto px-1 sm:px-4 py-12 space-y-4">
       {/* Header */}
       <div className="flex items-center mb-4">
         <img src={floppyIcon} alt="Floppy" className="w-6 h-6 mr-2" />
