@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import getOpenAIClient from "../openaiClient";
 import { z } from "zod";
@@ -10,6 +10,9 @@ export default function PageGenerator() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => new Date());
+
+  // Ref for the input field
+  const inputRef = useRef(null);
 
   // History state
   const [history, setHistory] = useState([]);
@@ -123,6 +126,10 @@ export default function PageGenerator() {
       setContent("<p class='text-red-500'>Failed to generate page.</p>");
     } finally {
       setLoading(false);
+      // Refocus the input after generation
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   };
 
@@ -161,10 +168,11 @@ export default function PageGenerator() {
           →
         </button>
         <input
+          ref={inputRef}
           type="text"
           className="win95-input bg-white text-black placeholder-gray-700 flex-1"
           placeholder="Enter a prompt"
-          disabled={loading}
+          
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
