@@ -117,18 +117,7 @@
     mix-blend-mode: overlay;
   }
 
-  .welcome-bg {
-    width: 100%;
-    background-color: #0a174e;
-    color: #fff;
-    padding: 1rem 0;
-    display: block;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    border-radius: 0.5em;
-    margin-bottom: 2rem;
-  }
+  
 
   .section-top-blue {
     background-color: #0a174e !important;
