@@ -18,7 +18,7 @@ export default function PageGenerator() {
     return () => clearInterval(interval);
   }, []);
 
-const handleGenerate = async () => {
+  const handleGenerate = async () => {
     if (loading) return;
     if (!prompt.trim()) return;
     setLoading(true);
@@ -74,12 +74,12 @@ const handleGenerate = async () => {
         <input
           type="text"
           className="win95-input bg-white text-black placeholder-gray-700"
-placeholder="Enter a prompt"
+          placeholder="Enter a prompt"
           disabled={loading}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
-if (e.key === "Enter" && !loading) {
+            if (e.key === "Enter" && !loading) {
               e.preventDefault();
               handleGenerate();
             }
@@ -112,6 +112,13 @@ if (e.key === "Enter" && !loading) {
             minute: "2-digit",
           })}
         </span>
+      </div>
+      <div className="mt-4 p-3 bg-gray-50 border border-gray-200 rounded text-left text-xs text-gray-600">
+        <strong>What is Generative Browsing?</strong>
+        <br />
+        Every time you enter a prompt, <span className="font-semibold">gpt4.1-nano</span>—a lightning-fast, affordable large language model—conjures a unique HTML page for you in real time. This is the "dead internet": a latent space where content is ephemeral, personal, and exists only as long as you need it. <br />
+        <br />
+        <span className="font-semibold">Why gpt4.1-nano?</span> Its speed and low cost make it ideal for generating the invisible tokens (HTML tags and markup) that power the web, enabling a seamless, scalable, and democratized creative experience for all.
       </div>
     </div>
   );
