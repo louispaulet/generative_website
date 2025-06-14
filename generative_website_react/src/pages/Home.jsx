@@ -11,7 +11,7 @@ export default function Home() {
         <div className="flex items-stretch gap-3">
           {/* Light bulb emoji filling the bubble height */}
           <img
-            src="/lightbulb.webp"
+            src="/lightbulb_v2.webp"
             alt="light bulb"
             className="w-[72px] h-[72px] object-contain flex items-center filter brightness-125"
           />
