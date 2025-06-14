@@ -84,25 +84,21 @@ if (e.key === "Enter" && !loading) {
           {loading ? "Generating..." : "Generate"}
         </button>
       </div>
-      {content && (
-        <>
-          <div
-            className="crt w-full"
-            style={{ aspectRatio: "4 / 3", minHeight: "600px" }}
-          >
-            <iframe
-              title="generated-content"
-              className="w-full h-full rounded-none"
-              srcDoc={content}
-            />
-          </div>
-          <div className="win95-taskbar w-full">
-            <span className="win95-start">Start</span>
-            <span className="flex-grow" />
-            <span className="win95-clock">12:00 AM</span>
-          </div>
-        </>
-      )}
+      <div
+        className="crt w-full"
+        style={{ aspectRatio: "4 / 3", minHeight: "600px" }}
+      >
+        <iframe
+          title="generated-content"
+          className="w-full h-full rounded-none"
+          srcDoc={content || ""}
+        />
+      </div>
+      <div className="win95-taskbar w-full">
+        <span className="win95-start">Start</span>
+        <span className="flex-grow" />
+        <span className="win95-clock">12:00 AM</span>
+      </div>
     </div>
   );
 }
