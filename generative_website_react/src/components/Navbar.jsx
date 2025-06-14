@@ -10,8 +10,9 @@ export default function Navbar() {
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-blue-600">
-            <Link to="/" className="hover:underline">
-              GenWeb
+            <Link to="/" className="hover:underline flex items-center space-x-1">
+              <img src="/retro_browser_logo.webp" alt="logo" className="w-12 h-12" />
+              <span>GenWeb</span>
             </Link>
           </h1>
           <div className="space-x-2">
