@@ -79,6 +79,15 @@
   padding: 0.25rem 0.5rem;
 }
 
+.win95-infobubble{
+  @apply mx-auto px-3 py-2 text-sm text-left;
+  background:var(--win-bg);
+  border:2px solid var(--win-light);
+  border-bottom-color:var(--win-dark);
+  border-right-color:var(--win-dark);
+  max-width:32rem; /* narrower bubble width */
+}
+
 /* CRT overlay effects */
   .crt::after {
     content: "";
