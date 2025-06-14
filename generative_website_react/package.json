@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "canvas-confetti": "^1.9.3",
     "dompurify": "^3.2.6",
     "js-cookie": "^3.0.5",
     "openai": "^5.3.0",
