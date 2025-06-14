@@ -1,3 +1,5 @@
+import confetti from "canvas-confetti";
+
 export default function About() {
   // Re-use the same retro Win95 icons as the new TOS page
   const floppyIcon =
@@ -73,7 +75,9 @@ export default function About() {
 
       {/* OK button */}
       <div className="text-right mt-6">
-        <button className="win95-button px-6">OK</button>
+        <button className="win95-button px-6" onClick={() => confetti({ particleCount: 80, spread: 70 })}>
+          OK
+        </button>
       </div>
     </section>
   );
