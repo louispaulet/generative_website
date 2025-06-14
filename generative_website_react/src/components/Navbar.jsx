@@ -10,8 +10,9 @@ export default function Navbar() {
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-blue-600">
-            <Link to="/" className="hover:underline">
-              GenWeb
+            <Link to="/" className="hover:underline flex items-center space-x-1">
+              <span role="img" aria-label="logo">🌐</span>
+              <span>GenWeb</span>
             </Link>
           </h1>
           <div className="space-x-2">
