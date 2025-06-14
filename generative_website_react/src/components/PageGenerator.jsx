@@ -5,6 +5,13 @@ import { z } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
 import DOMPurify from "dompurify";
 
+const demoPrompts = [
+  `imagine a youtube landing page in a world where videos have a smell : what would it look like ? imagine the disgustings trends of clickbait smell o vision videos -- please use emojis instead of images`,
+  "display a fake windows xp interface",
+  "make a fake overly complex interface to declare taxes",
+  "Weird invitation to a gender reveal party in the sewers. Mention in big 'Gender Reveal Party Down The Drain'"
+];
+
 export default function PageGenerator() {
   const [prompt, setPrompt] = useState("");
   const [content, setContent] = useState("");
@@ -148,12 +155,9 @@ content:
     }
   };
 
-  // Demo prompt for the Start button
-  const demoPrompt = `imagine a youtube landing page in a world where videos have a smell : what would it look like ? imagine the disgustings trends of clickbait smell o vision videos -- please use emojis instead of images`;
-
-  // Effect: when prompt is set to demoPrompt, trigger handleGenerate
+  // Effect: when prompt is set to any demo prompt, trigger handleGenerate
   useEffect(() => {
-    if (prompt === demoPrompt) {
+    if (demoPrompts.includes(prompt)) {
       handleGenerate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -216,7 +220,9 @@ content:
         <button
           className="win95-start"
           onClick={() => {
-            setPrompt(demoPrompt);
+            // Pick a random prompt from the list
+            const randomPrompt = demoPrompts[Math.floor(Math.random() * demoPrompts.length)];
+            setPrompt(randomPrompt);
           }}
         >
           Start
