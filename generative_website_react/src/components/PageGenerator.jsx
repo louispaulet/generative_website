@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import getOpenAIClient from "../openaiClient";
 import { z } from "zod";
@@ -9,6 +9,14 @@ export default function PageGenerator() {
   const [prompt, setPrompt] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [currentTime, setCurrentTime] = useState(() => new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
 const handleGenerate = async () => {
     if (loading) return;
@@ -98,7 +106,12 @@ if (e.key === "Enter" && !loading) {
       <div className="win95-taskbar w-full">
         <span className="win95-start">Start</span>
         <span className="flex-grow" />
-        <span className="win95-clock">12:00 AM</span>
+        <span className="win95-clock">
+          {currentTime.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          })}
+        </span>
       </div>
     </div>
   );
