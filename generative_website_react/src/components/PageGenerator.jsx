@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import getOpenAIClient from "../openaiClient";
 import { z } from "zod";
@@ -10,6 +10,13 @@ export default function PageGenerator() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => new Date());
+
+  // Ref for the input field
+  const inputRef = useRef(null);
+
+  // History state
+  const [history, setHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,8 +35,10 @@ export default function PageGenerator() {
       if (apiKey) {
         const openai = getOpenAIClient();
         try {
-          const HtmlWrap = z.object({
-            html: z.array(z.string()),
+          // Expect a JSON object: { html: "...", css: "..." }
+          const HtmlCssWrap = z.object({
+            html: z.string(),
+            css: z.string(),
           });
           const response = await openai.responses.parse({
             model: "gpt-4.1-nano-2025-04-14",
@@ -37,16 +46,32 @@ export default function PageGenerator() {
               {
                 role: "system",
                 content:
-                  'You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer with a JSON object {"html": ["<RAW_HTML>"]} where the "html" key holds an array with a single string containing the raw HTML to be directly displayed.',
+                  'You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer with a JSON object: { "html": "<RAW_HTML>", "css": "<RAW_CSS>" }. The HTML must use a few invented CSS classes, and the CSS must define those classes. You must ALWAYS return both "html" and "css" keys, even if the user prompt does not mention CSS. Never return only HTML. Do not include any explanations or extra text. Only output the JSON object.',
               },
               { role: "user", content: prompt },
             ],
             text: {
-              format: zodTextFormat(HtmlWrap, "htmlWrap"),
+              format: zodTextFormat(HtmlCssWrap, "htmlCssWrap"),
             },
           });
-          const htmlArray = response.output_parsed.html;
-          setContent(DOMPurify.sanitize(htmlArray?.[0] ?? ""));
+          let { html, css } = response.output_parsed;
+          // Fallback: if CSS is missing or empty, provide a minimal default
+          if (!css || typeof css !== "string" || !css.trim()) {
+            css = "body{font-family:sans-serif;}";
+          }
+          // Inject CSS into HTML for iframe display
+          const htmlWithCss = `<style>${css}</style>` + html;
+          // For debugging: store both raw and sanitized
+          window.__GEN_RAW_IFRAME__ = htmlWithCss;
+          window.__GEN_SANITIZED_IFRAME__ = DOMPurify.sanitize(htmlWithCss, { ADD_TAGS: ["style"] });
+          setContent(htmlWithCss); // No sanitization for iframe content
+          // Update history
+          setHistory((prev) => {
+            const newHistory = prev.slice(0, historyIndex + 1);
+            newHistory.push(htmlWithCss);
+            return newHistory;
+          });
+          setHistoryIndex((prev) => prev + 1);
         } catch (err) {
           console.error(err);
           setContent(
@@ -59,23 +84,95 @@ export default function PageGenerator() {
           `/generate?link_text=${encodeURIComponent(prompt)}`
         );
         const text = await resp.text();
-        setContent(text);
+        // Try to parse as JSON object { html, css }
+        let htmlWithCss = "";
+        try {
+          const obj = JSON.parse(text);
+          if (
+            obj &&
+            typeof obj === "object" &&
+            typeof obj.html === "string"
+          ) {
+            // Fallback: if CSS is missing or empty, provide a minimal default
+            let css = typeof obj.css === "string" && obj.css.trim() ? obj.css : "body{font-family:sans-serif;}";
+            htmlWithCss = `<style>${css}</style>` + obj.html;
+          } else if (
+            Array.isArray(obj) &&
+            obj.length === 2 &&
+            typeof obj[0] === "string" &&
+            typeof obj[1] === "string"
+          ) {
+            // Legacy: handle [html, css] array
+            htmlWithCss = `<style>${obj[1]}</style>` + obj[0];
+          } else {
+            htmlWithCss = text;
+          }
+        } catch {
+          htmlWithCss = text;
+        }
+        // For debugging: store both raw and sanitized
+        window.__GEN_RAW_IFRAME__ = htmlWithCss;
+        window.__GEN_SANITIZED_IFRAME__ = DOMPurify.sanitize(htmlWithCss, { ADD_TAGS: ["style"] });
+        setContent(htmlWithCss); // No sanitization for iframe content
+        // Update history
+        setHistory((prev) => {
+          const newHistory = prev.slice(0, historyIndex + 1);
+          newHistory.push(htmlWithCss);
+          return newHistory;
+        });
+        setHistoryIndex((prev) => prev + 1);
       }
     } catch {
       setContent("<p class='text-red-500'>Failed to generate page.</p>");
     } finally {
       setLoading(false);
+      // Refocus the input after generation
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }
+  };
+
+  // Navigation handlers
+  const handleBack = () => {
+    if (historyIndex > 0) {
+      setHistoryIndex((prev) => prev - 1);
+      setContent(history[historyIndex - 1]);
+    }
+  };
+
+  const handleForward = () => {
+    if (historyIndex < history.length - 1) {
+      setHistoryIndex((prev) => prev + 1);
+      setContent(history[historyIndex + 1]);
     }
   };
 
   return (
-<div className="mx-auto mt-8 space-y-2 max-w-full sm:w-[50vw] px-1 sm:px-0" style={{ width: "100vw" }}>
-      <div className="win95-toolbar">
+    <div className="mx-auto mt-8 space-y-2 max-w-full sm:w-[50vw] px-1 sm:px-0" style={{ width: "100vw" }}>
+      <div className="win95-toolbar flex flex-row items-center gap-2">
+        <button
+          className="win95-button px-2"
+          onClick={handleBack}
+          disabled={historyIndex <= 0}
+          aria-label="Back"
+        >
+          ←
+        </button>
+        <button
+          className="win95-button px-2"
+          onClick={handleForward}
+          disabled={historyIndex >= history.length - 1}
+          aria-label="Forward"
+        >
+          →
+        </button>
         <input
+          ref={inputRef}
           type="text"
-          className="win95-input bg-white text-black placeholder-gray-700"
+          className="win95-input bg-white text-black placeholder-gray-700 flex-1"
           placeholder="Enter a prompt"
-          disabled={loading}
+          
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={(e) => {
@@ -84,6 +181,7 @@ export default function PageGenerator() {
               handleGenerate();
             }
           }}
+          style={{ minWidth: 0 }}
         />
         <button
           onClick={handleGenerate}
