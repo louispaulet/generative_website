@@ -242,6 +242,9 @@ content:
         <br />
         <span className="font-semibold">Why gpt4.1-nano?</span> Its speed and low cost make it ideal for generating the invisible tokens (HTML tags and markup) that power the web, enabling a seamless, scalable, and democratized creative experience for all.
       </div>
+      <div className="mt-2 text-xs italic text-gray-700 bg-yellow-50 border border-yellow-200 rounded px-3 py-2">
+        Tip: click the <span className="font-semibold">start</span> button to try a random prompt!
+      </div>
     </div>
   );
 }
