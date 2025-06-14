@@ -28,8 +28,10 @@ export default function PageGenerator() {
       if (apiKey) {
         const openai = getOpenAIClient();
         try {
-          const HtmlWrap = z.object({
-            html: z.array(z.string()),
+          // Expect a JSON object: { html: "...", css: "..." }
+          const HtmlCssWrap = z.object({
+            html: z.string(),
+            css: z.string(),
           });
           const response = await openai.responses.parse({
             model: "gpt-4.1-nano-2025-04-14",
@@ -37,16 +39,25 @@ export default function PageGenerator() {
               {
                 role: "system",
                 content:
-                  'You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer with a JSON object {"html": ["<RAW_HTML>"]} where the "html" key holds an array with a single string containing the raw HTML to be directly displayed.',
+                  'You are a browser. You have the knowledge of the whole compressed internet in yourself. You only answer with a JSON object: { "html": "<RAW_HTML>", "css": "<RAW_CSS>" }. The HTML must use a few invented CSS classes, and the CSS must define those classes. You must ALWAYS return both "html" and "css" keys, even if the user prompt does not mention CSS. Never return only HTML. Do not include any explanations or extra text. Only output the JSON object.',
               },
               { role: "user", content: prompt },
             ],
             text: {
-              format: zodTextFormat(HtmlWrap, "htmlWrap"),
+              format: zodTextFormat(HtmlCssWrap, "htmlCssWrap"),
             },
           });
-          const htmlArray = response.output_parsed.html;
-          setContent(DOMPurify.sanitize(htmlArray?.[0] ?? ""));
+          let { html, css } = response.output_parsed;
+          // Fallback: if CSS is missing or empty, provide a minimal default
+          if (!css || typeof css !== "string" || !css.trim()) {
+            css = "body{font-family:sans-serif;}";
+          }
+          // Inject CSS into HTML for iframe display
+          const htmlWithCss = `<style>${css}</style>` + html;
+          // For debugging: store both raw and sanitized
+          window.__GEN_RAW_IFRAME__ = htmlWithCss;
+          window.__GEN_SANITIZED_IFRAME__ = DOMPurify.sanitize(htmlWithCss, { ADD_TAGS: ["style"] });
+          setContent(htmlWithCss); // No sanitization for iframe content
         } catch (err) {
           console.error(err);
           setContent(
@@ -59,7 +70,36 @@ export default function PageGenerator() {
           `/generate?link_text=${encodeURIComponent(prompt)}`
         );
         const text = await resp.text();
-        setContent(text);
+        // Try to parse as JSON object { html, css }
+        let htmlWithCss = "";
+        try {
+          const obj = JSON.parse(text);
+          if (
+            obj &&
+            typeof obj === "object" &&
+            typeof obj.html === "string"
+          ) {
+            // Fallback: if CSS is missing or empty, provide a minimal default
+            let css = typeof obj.css === "string" && obj.css.trim() ? obj.css : "body{font-family:sans-serif;}";
+            htmlWithCss = `<style>${css}</style>` + obj.html;
+          } else if (
+            Array.isArray(obj) &&
+            obj.length === 2 &&
+            typeof obj[0] === "string" &&
+            typeof obj[1] === "string"
+          ) {
+            // Legacy: handle [html, css] array
+            htmlWithCss = `<style>${obj[1]}</style>` + obj[0];
+          } else {
+            htmlWithCss = text;
+          }
+        } catch {
+          htmlWithCss = text;
+        }
+        // For debugging: store both raw and sanitized
+        window.__GEN_RAW_IFRAME__ = htmlWithCss;
+        window.__GEN_SANITIZED_IFRAME__ = DOMPurify.sanitize(htmlWithCss, { ADD_TAGS: ["style"] });
+        setContent(htmlWithCss); // No sanitization for iframe content
       }
     } catch {
       setContent("<p class='text-red-500'>Failed to generate page.</p>");
@@ -113,6 +153,7 @@ export default function PageGenerator() {
           })}
         </span>
       </div>
+      
       <div className="mt-4 p-3 bg-gray-50 border border-gray-200 rounded text-left text-xs text-gray-600">
         <strong>What is Generative Browsing?</strong>
         <br />
