@@ -11,7 +11,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <h1 className="text-xl font-bold text-blue-600">
             <Link to="/" className="hover:underline flex items-center space-x-1">
-              <span role="img" aria-label="logo">🌐</span>
+              <img src="/retro_browser_logo.webp" alt="logo" className="w-12 h-12" />
               <span>GenWeb</span>
             </Link>
           </h1>
