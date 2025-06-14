@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import getOpenAIClient from "../openaiClient";
 import { z } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
+import DOMPurify from "dompurify";
 
 export default function PageGenerator() {
   const [prompt, setPrompt] = useState("");
@@ -37,7 +38,7 @@ const handleGenerate = async () => {
             },
           });
           const htmlArray = response.output_parsed.html;
-          setContent(htmlArray?.[0] ?? "");
+          setContent(DOMPurify.sanitize(htmlArray?.[0] ?? ""));
         } catch (err) {
           console.error(err);
           setContent(
