@@ -10,13 +10,11 @@ export default function Home() {
       <div className="win95-infobubble mx-auto mb-6">
         <div className="flex items-stretch gap-3">
           {/* Light bulb emoji filling the bubble height */}
-          <span
-            role="img"
-            aria-label="light bulb"
-            className="text-6xl leading-none flex items-center"
-          >
-            💡
-          </span>
+          <img
+            src="/lightbulb.webp"
+            alt="light bulb"
+            className="w-[72px] h-[72px] object-contain flex items-center filter brightness-125"
+          />
           <p className="text-gray-700">
             Generative Website leverages OpenAI's ChatGPT to dynamically
             create HTML pages based on your prompts. Use the generator below to
