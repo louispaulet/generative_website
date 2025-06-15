@@ -116,4 +116,13 @@
     );
     mix-blend-mode: overlay;
   }
+
+  
+
+  .section-top-blue {
+    background-color: #0a174e !important;
+    color: #fff !important;
+    border-radius: 0.5em;
+    /* Keep padding and margin as set by utility classes */
+  }
 }

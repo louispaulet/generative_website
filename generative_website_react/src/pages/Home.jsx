@@ -3,18 +3,18 @@ import PageGenerator from "../components/PageGenerator";
 
 export default function Home() {
   return (
-<section className="win95-window max-w-full sm:max-w-5xl mx-auto px-1 sm:px-4 py-12 text-center">
-      <h2 className="text-3xl font-bold mb-4">Welcome to Generative Website</h2>
+<section className="win95-window max-w-full sm:max-w-5xl mx-auto px-1 sm:px-4 py-2 text-center">
+<div className="bg-blue-600 text-white rounded-lg mb-8 py-2">
+  <h2 className="text-3xl font-bold m-0">Welcome to Generative Website</h2>
+</div>
       <div className="win95-infobubble mx-auto mb-6">
         <div className="flex items-stretch gap-3">
           {/* Light bulb emoji filling the bubble height */}
-          <span
-            role="img"
-            aria-label="light bulb"
-            className="text-6xl leading-none flex items-center"
-          >
-            💡
-          </span>
+          <img
+            src="/lightbulb_v2.webp"
+            alt="light bulb"
+            className="w-[72px] h-[72px] object-contain flex items-center filter brightness-125"
+          />
           <p className="text-gray-700">
             Generative Website leverages OpenAI's ChatGPT to dynamically
             create HTML pages based on your prompts. Use the generator below to
