@@ -16,13 +16,10 @@ export default function About() {
 
       {/* Expanded Intro */}
       <p className="text-gray-700">
-        <strong>Generative Website</strong> is an open project exploring new ways to browse and create on the web. We use artificial intelligence, especially large language models, to generate web experiences in real time, based on your input. The idea is to let you interact with a "dead internet": a space where content is created for you, on demand, and disappears when you leave.
+        <strong>Generative Website</strong> is an open project that lets you explore and create on the web in new ways. Using artificial intelligence, especially large language models, we generate web experiences in real time based on your input. Here, you can interact with a "dead internet" where content is made just for you and disappears when you leave.
       </p>
       <p className="text-gray-700">
-        The core of this project is <strong>gpt4.1-nano</strong>, a fast and affordable language model that is great at producing the invisible parts of the web: HTML tags, CSS, and the structure behind every page. By using a model that is both cheap and optimized for markup, we can offer a generative browsing experience that is accessible and responsive to what you want.
-      </p>
-      <p className="text-gray-700">
-        This platform shows how OpenAI’s ChatGPT can be used to create full HTML pages from a single prompt. The site is built with Vite, React, and Tailwind CSS, and packaged with Docker. Generative Website is meant to show how AI can make web development faster and more approachable for everyone, whether you are a hobbyist or a professional.
+        Powered by <strong>gpt4.1-nano</strong>, a fast and affordable model tuned for HTML and markup, this platform shows how AI can quickly build full web pages from a single prompt. Built with Vite, React, and Tailwind CSS, and packaged with Docker, Generative Website makes web development faster and more approachable for everyone.
       </p>
 
       {/* Feature list styled like the new TOS page */}
